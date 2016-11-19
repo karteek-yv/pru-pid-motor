@@ -32,7 +32,7 @@
  */
 
 #include <stdint.h>
-#include <pru_cfg.h>
+#include <am335x/pru_cfg.h>
 #include "resource_table_empty.h"
 
 volatile register uint32_t __R30;
