@@ -33,14 +33,14 @@
 
 #include <stdint.h>
 #include <limits.h>
-#include <am335x/pru_cfg.h>
-#include <am335x/pru_ecap.h>
-#include <am335x/sys_pwmss.h>
-#include <am335x/pru_intc.h>
+#include <pru_cfg.h>
+#include <pru_ecap.h>
+#include <sys_pwmss.h>
+#include <pru_intc.h>
 #include <rsc_types.h>
 #include <pru_virtqueue.h>
 #include <pru_rpmsg.h>
-//#include <am335x/sys_mailbox.h>
+#include <sys_mailbox.h>
 #include "resource_table_1.h"
 
 /* Shared PID data structure - ensure both shared stucts match PRU 0 */
@@ -63,11 +63,11 @@ struct shared_mem {
     volatile struct pid_data pid;
 };
 
-// RPMsg data struct SHOULD BE ABLE TO DELETE THIS
-//struct rpmsg_unit {
-//    char cmd;
-//    unsigned int msg;
-//};
+/* RPMsg data struct */
+struct rpmsg_unit {
+    char cmd;
+    unsigned int msg;
+};
 
 /* PRU GPIO Registers */
 volatile register uint32_t __R30;
@@ -84,9 +84,9 @@ volatile register uint32_t __R31;
 #define SAMPLES_PER_SEC     12
 #define SEC_PER_MIN         60
 /* PRU1 is mailbox module user 2 */
-//#define MB_USER             2
+#define MB_USER             2
 /* Mbox0 - mail_u2_irq (mailbox interrupt for PRU1) is Int Number 59 */
-//#define MB_INT_NUMBER       59
+#define MB_INT_NUMBER       59
 
 /* Host-1 Interrupt sets bit 31 in register R31 */
 #define HOST_INT            0x80000000
@@ -95,8 +95,8 @@ volatile register uint32_t __R31;
  * PRU0 uses mailboxes 2 (From ARM) and 3 (To ARM)
  * PRU1 uses mailboxes 4 (From ARM) and 5 (To ARM)
  */
-#define TO_ARM_HOST      16
-#define FROM_ARM_HOST    17
+#define MB_TO_ARM_HOST      5
+#define MB_FROM_ARM_HOST    4
 /*
  * The name 'rpmsg-pru' corresponds to the rpmsg_pru driver found
  * at linux-x.y.z/drivers/rpmsg/rpmsg_pru.c
@@ -113,13 +113,11 @@ volatile register uint32_t __R31;
 void init_pwm();
 void init_eqep();
 int get_enc_rpm();
-//void init_rpmsg(struct pru_rpmsg_transport *transport);
-//void rpmsg_interrupt(volatile struct pid_data* pid, struct pru_rpmsg_transport *transport, uint8_t *payload,
-//        uint16_t src, uint16_t dst, uint16_t len);
-//void rpmsg_isr(volatile struct pid_data* pid, struct pru_rpmsg_transport *transport, uint8_t *payload,
+void init_rpmsg(struct pru_rpmsg_transport *transport);
+void rpmsg_interrupt(volatile struct pid_data* pid, struct pru_rpmsg_transport *transport, uint8_t *payload,
+        uint16_t src, uint16_t dst, uint16_t len);
+void rpmsg_isr(volatile struct pid_data* pid, struct pru_rpmsg_transport *transport, uint8_t *payload,
         uint16_t src, uint16_t dst);
-
-// Not sure about these:
 void int_to_payload(uint8_t *payload, int data);
 unsigned int payload_to_int(uint8_t *payload);
 
@@ -143,45 +141,23 @@ void main(void) {
     /* RPMsg variables */
     struct pru_rpmsg_transport transport;
     uint16_t src, dst, len;
-    volatile uint8_t *status;  //  Added for new kernel modules.
 
     /* allow OCP master port access by the PRU so the PRU can read external memories */
     CT_CFG.SYSCFG_bit.STANDBY_INIT = 0;
-
-  //  Clear the status of PRU-ICSS system event that the ARM will use to 'kick'
-  //  us.
-  CT_INTC.SICR_bit.STS_CLR_IDX = FROM_ARM_HOST;
-
-  //  Make sure the drivers are ready for RPMsg communication:
-  status = &resourceTable.rpmsg_vdev.status;
-  while (!(*status & VIRTIO_CONFIG_S_DRIVER_OK))
-    ;
-
-  //  Initialize pru_virtqueue corresponding to vring0 (PRU to ARM Host
-  //  direction).
-  pru_rpmsg_init(&transport, &resourceTable.rpmsg_vring0,
-                 &resourceTable.rpmsg_vring1, TO_ARM_HOST, FROM_ARM_HOST);
-
-  // Create the RPMsg channel between the PRU and the ARM user space using the
-  // transport structure.
-  while (pru_rpmsg_channel(RPMSG_NS_CREATE, &transport, CHAN_NAME, CHAN_DESC,
-                           CHAN_PORT) != PRU_RPMSG_SUCCESS)
-    ;
 
     /* Initialize peripheral fuctions */
     init_eqep();
     init_pwm();
 
-    /* Initialize RPMsg */  should not be required with new kernel drivers.
-    //  init_rpmsg(&transport);
+    /* Initialize RPMsg */
+    init_rpmsg(&transport);
 
     /* Set init flag to signal PID to continue initializing */
     share_buff.init_flag = 1;
 
     while (1) {
-        /* Get userspace messages */ Replace with more recent function.???
-        // rpmsg_interrupt(&share_buff.pid, &transport, payload, dst, src, len);
-        pru_rpmsg_receive(&transport, &src, &dst, payload, &len)
+        /* Get userspace messages */
+        rpmsg_interrupt(&share_buff.pid, &transport, payload, dst, src, len);
 
         /* Write PWM speed (ACMP) */
         CT_ECAP.CAP2_bit.CAP2 = share_buff.pid.output;
