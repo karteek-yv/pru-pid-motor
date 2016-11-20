@@ -85,7 +85,7 @@ volatile register uint32_t __R31;
 #define SEC_PER_MIN         60
 
 /* Host-1 Interrupt sets bit 31 in register R31 */
-#define HOST_INT            0x80000000
+#define HOST_INT            ((uint32_t) 1 << 31) 
 
 //  The PRU-ICSS system events used for RPMsg are defined in the Linux device
 //  tree.
@@ -271,11 +271,11 @@ void init_rpmsg(struct pru_rpmsg_transport* transport) {
     pru_rpmsg_init(transport, &resourceTable.rpmsg_vring0, &resourceTable.rpmsg_vring1, TO_ARM_HOST, FROM_ARM_HOST);
 
     /* Initialize pru_virtqueue corresponding to vring1 (ARM Host to PRU direction) */
-    pru_rpmsg_init(transport, &resourceTable.rpmsg_vring1, &resourceTable.rpmsg_vring0, TO_ARM_HOST, FROM_ARM_HOST);
+//    pru_rpmsg_init(transport, &resourceTable.rpmsg_vring1, &resourceTable.rpmsg_vring0, TO_ARM_HOST, FROM_ARM_HOST);
 
     /* Create the RPMsg channels between the PRU and ARM user space using the transport structure. */
     while (pru_rpmsg_channel(RPMSG_NS_CREATE, transport, CHAN_NAME, CHAN_DESC, CHAN_PORT) != PRU_RPMSG_SUCCESS);
-    while (pru_rpmsg_channel(RPMSG_NS_CREATE, transport, CHAN_NAME, CHAN_DESC_2, CHAN_PORT_2) != PRU_RPMSG_SUCCESS);
+//    while (pru_rpmsg_channel(RPMSG_NS_CREATE, transport, CHAN_NAME, CHAN_DESC_2, CHAN_PORT_2) != PRU_RPMSG_SUCCESS);
 }
 
 /*
