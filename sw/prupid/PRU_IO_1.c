@@ -1,23 +1,16 @@
-/*
- * Copyright (C) 2016 Texas Instruments Incorporated - http://www.ti.com/ 
- *  
- *  
+/* Copyright (C) 2016 Texas Instruments Incorporated - http://www.ti.com/ 
  * Redistribution and use in source and binary forms, with or without 
  * modification, are permitted provided that the following conditions 
  * are met:
- * 
  * 	* Redistributions of source code must retain the above copyright 
  * 	  notice, this list of conditions and the following disclaimer.
- * 
  * 	* Redistributions in binary form must reproduce the above copyright
  * 	  notice, this list of conditions and the following disclaimer in the 
  * 	  documentation and/or other materials provided with the   
  * 	  distribution.
- * 
  * 	* Neither the name of Texas Instruments Incorporated nor the names of
  * 	  its contributors may be used to endorse or promote products derived
  * 	  from this software without specific prior written permission.
- * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -40,10 +33,9 @@
 #include <rsc_types.h>
 #include <pru_virtqueue.h>
 #include <pru_rpmsg.h>
-//#include <sys_mailbox.h>
 #include "resource_table_1.h"
 
-/* Shared PID data structure - ensure both shared stucts match PRU 0 */
+/* Shared PID data structure - ensure both shared structs match PRU 0 */
 struct pid_data {
     /* PID tunings */
     int Kp_f, Ki_f, Kd_f;
@@ -131,14 +123,10 @@ uint8_t payload[RPMSG_BUF_SIZE];
 #pragma DATA_SECTION(share_buff, ".share_buff")
 volatile far struct shared_mem share_buff;
 
-/*
- * main.c
- */
 void main(void) {
     /* RPMsg variables */
     struct pru_rpmsg_transport transport;
     uint16_t src, dst, len;
-//    volatile uint8_t *status;
 
     /* allow OCP master port access by the PRU so the PRU can read external memories */
     CT_CFG.SYSCFG_bit.STANDBY_INIT = 0;
@@ -196,7 +184,7 @@ void init_eqep() {
     while (!(CM_PER_EPWMSS1 & 0x2))
         CM_PER_EPWMSS1 |= 0x2;
 
-    /* Set to defaults in quadriture mode */
+    /* Set to defaults in quadrature mode */
     PWMSS1.EQEP_QDECCTL = 0x00;
 
     /* Enable unit timer
@@ -234,9 +222,8 @@ void init_eqep() {
     PWMSS1.EQEP_QCLR = 0xFFFF;
 }
 
-/*
- * get_enc_rpm()
- */
+//  get_enc_rpm()
+
 int get_enc_rpm() {
     int rpm = 0;
 
@@ -253,29 +240,24 @@ int get_enc_rpm() {
     return rpm;
 }
 
-/*
- * init_rpmsg
- */
+//  init_rpmsg
+ 
 void init_rpmsg(struct pru_rpmsg_transport* transport) {
 	volatile uint8_t *status;
 
-    /* clear the status of event MB_INT_NUMBER (the mailbox event) and enable the mailbox event */
-    CT_INTC.SICR_bit.STS_CLR_IDX = FROM_ARM_HOST;
-//    CT_MBX.IRQ[MB_USER].ENABLE_SET |= 1 << (MB_FROM_ARM_HOST * 2);
+// Clear the status of the PRU-ICSS system event that the ARM will use to 'kick' us.
+        CT_INTC.SICR_bit.STS_CLR_IDX = FROM_ARM_HOST;
 
 	/* Make sure the Linux drivers are ready for RPMsg communication */
 	status = &resourceTable.rpmsg_vdev.status;
 	while (!(*status & VIRTIO_CONFIG_S_DRIVER_OK));
 
-    /* Initialize pru_virtqueue corresponding to vring0 (PRU to ARM Host direction) */
+	/* Initialize the RPMsg transport structure */
     pru_rpmsg_init(transport, &resourceTable.rpmsg_vring0, &resourceTable.rpmsg_vring1, TO_ARM_HOST, FROM_ARM_HOST);
-
-    /* Initialize pru_virtqueue corresponding to vring1 (ARM Host to PRU direction) */
-//    pru_rpmsg_init(transport, &resourceTable.rpmsg_vring1, &resourceTable.rpmsg_vring0, TO_ARM_HOST, FROM_ARM_HOST);
 
     /* Create the RPMsg channels between the PRU and ARM user space using the transport structure. */
     while (pru_rpmsg_channel(RPMSG_NS_CREATE, transport, CHAN_NAME, CHAN_DESC, CHAN_PORT) != PRU_RPMSG_SUCCESS);
-//    while (pru_rpmsg_channel(RPMSG_NS_CREATE, transport, CHAN_NAME, CHAN_DESC_2, CHAN_PORT_2) != PRU_RPMSG_SUCCESS);
+    while (pru_rpmsg_channel(RPMSG_NS_CREATE, transport, CHAN_NAME, CHAN_DESC_2, CHAN_PORT_2) != PRU_RPMSG_SUCCESS);
 }
 
 /*
@@ -283,18 +265,13 @@ void init_rpmsg(struct pru_rpmsg_transport* transport) {
  */
 void rpmsg_interrupt(volatile struct pid_data* pid, struct pru_rpmsg_transport *transport, uint8_t *payload,
         uint16_t src, uint16_t dst, uint16_t len) {
-    /* Check bit 31 of register R30 to see if the mailbox interrupt has occurred */
+    // Check bit 31 of register R31 to see if the ARM has kicked us */
     if(__R31 & HOST_INT){
 
-        /* Clear the mailbox interrupt */
- //       CT_MBX.IRQ[MB_USER].STATUS_CLR |= 1 << (MB_FROM_ARM_HOST * 2);
-        /* Clear the event status, event MB_INT_NUMBER corresponds to the mailbox interrupt */
+        /* Clear the event status */
         CT_INTC.SICR_bit.STS_CLR_IDX = FROM_ARM_HOST;
 
-        /* Use a while loop to read all of the current messages in the mailbox */
-        //while(CT_MBX.MSGSTATUS_bit[MB_FROM_ARM_HOST].NBOFMSG > 0)
-            /* Check to see if the message corresponds to a receive event for the PRU */
-        //    if(CT_MBX.MESSAGE[MB_FROM_ARM_HOST] == 1)
+/* Receive all available messages, multiple messages can be sent per kick */
                 /* Receive the message */
                 if(pru_rpmsg_receive(transport, &src, &dst, payload, &len) == PRU_RPMSG_SUCCESS){
                     /* Service the new interrupt */
