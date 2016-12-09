@@ -72,7 +72,7 @@ volatile register uint32_t __R31;
 #define PERIOD_CYCLES       0x1000
 
 /* Encoder definitions */
-#define TICKS_PER_REV       16
+#define TICKS_PER_REV       40 
 #define SAMPLES_PER_SEC     12
 #define SEC_PER_MIN         60
 
@@ -146,8 +146,9 @@ void main(void) {
         rpmsg_interrupt(&share_buff.pid, &transport, payload, dst, src, len);
 
         /* Write PWM speed (ACMP) */
-        CT_ECAP.CAP2_bit.CAP2 = share_buff.pid.output;
 
+        CT_ECAP.CAP2_bit.CAP2 = share_buff.pid.output;
+//        CT_ECAP.CAP2_bit.CAP2 = 0x0AF0;
         /* Save write cycles by waiting until unit time event */
         if (PWMSS1.EQEP_QFLG & 0x0800) {
             PWMSS1.EQEP_QCLR |= 0x0800;
@@ -197,7 +198,7 @@ void init_eqep() {
 
     /* Set prescalers for EQEP Capture timer and UPEVNT */
     /* Note: EQEP Capture unit must be disabled before changing prescalar */
-    PWMSS1.EQEP_QCAPCTL = 0x0073;
+    PWMSS1.EQEP_QCAPCTL = 0x0070;
 
     /* Enable EQEP Capture */
     PWMSS1.EQEP_QCAPCTL |= 0x8000;

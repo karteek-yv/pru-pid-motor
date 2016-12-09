@@ -75,24 +75,30 @@ volatile far struct shared_mem share_buff;
  */
 void main(void) {
     LOOPS = 0;
-
-    __R30 = 0xFF;
+    //  Blink the LED to show PRU0 is alive.
+    __R30 = 0x0000;
+    __delay_cycles(10000000);
+    __R30 = 0xFFFF;
+    __delay_cycles(10000000);
+    __R30 = 0x0000;
+    __delay_cycles(10000000);
 
     /* Allow for PRU core 1 to initialize */
     while (!share_buff.init_flag == 1);
+    __R30 = 0xFFFF;  //  Turn on LED if initialization happens.
 
     /* Initialize PIDs */
     init_pid(&share_buff.pid);
 
     /* Set default PID tunings */
     share_buff.pid.Kp_f    = 500;
-    share_buff.pid.Ki_f    = 300;
+    share_buff.pid.Ki_f    = 200;
     share_buff.pid.Kd_f    = 200;
 
-    share_buff.pid.max_output = 4096;
+    share_buff.pid.max_output = 0x1000; // Decimal 4096.  This is duty cycle.
     share_buff.pid.min_output = 0;
 
-    share_buff.pid.setpoint = 2000;
+    share_buff.pid.setpoint = 3000;
 
     /* Main loop */
 	while(1) {

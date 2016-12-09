@@ -15,14 +15,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 INCLUDE_PATHS=-I$(PRU_CGT)/includeSupportPackage -I$(PRU_CGT)/include -I$(PRU_CGT)/lib
-CFLAGS=$(INCLUDE_PATHS) --hardware_mac=on --c99
+CFLAGS=$(INCLUDE_PATHS) --hardware_mac=on -O2 -v3 --display_error_number --endian=little
 LNK_CMDS1=-z -i$(PRU_CGT)/lib -i$(PRU_CGT)/include -i$(PRU_CGT)/includeSupportPackage
 LNK_CMDS2=-i$(PRU_CGT)/includeSupportPackage/am335x --reread_libs --stack_size=0x100
 LNK_CMDS3=--heap_size=0x100 --library=$(PRU_CGT)/lib/rpmsg_lib.lib
 
 all: $(SOURCES)
-	clpru $(CFLAGS) PRU_PID_0.c $(LNK_CMDS1) $(LNK_CMDS2) $(LNK_CMDS3) ./AM335x_PRU.cmd -o ./result/am335x-pru0-fw --library=libc.a 
-	clpru $(CFLAGS) PRU_IO_1.c $(LNK_CMDS1) $(LNK_CMDS2) $(LNK_CMDS3) ./AM335x_PRU.cmd -o ./result/am335x-pru1-fw --library=libc.a 
+	clpru $(CFLAGS) PRU_PID_0.c $(LNK_CMDS1) $(LNK_CMDS2) $(LNK_CMDS3) -m=mapfile0 ./AM335x_PRU.cmd -o ./result/am335x-pru0-fw --library=libc.a 
+	clpru $(CFLAGS) PRU_IO_1.c $(LNK_CMDS1) $(LNK_CMDS2) $(LNK_CMDS3) -m=mapfile1 ./AM335x_PRU.cmd -o ./result/am335x-pru1-fw --library=libc.a 
 	gcc ./user_space/prumsg.c -o /usr/bin/prumsg
 	cd result
 	cp ./result/am335x-pru0-fw /lib/firmware
