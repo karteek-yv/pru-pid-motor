@@ -23,7 +23,7 @@ LNK_CMDS3=--heap_size=0x100 --library=$(PRU_CGT)/lib/rpmsg_lib.lib
 all: $(SOURCES)
 	clpru $(CFLAGS) PRU_PID_0.c $(LNK_CMDS1) $(LNK_CMDS2) $(LNK_CMDS3) ./AM335x_PRU.cmd -o ./result/am335x-pru0-fw --library=libc.a 
 	clpru $(CFLAGS) PRU_IO_1.c $(LNK_CMDS1) $(LNK_CMDS2) $(LNK_CMDS3) ./AM335x_PRU.cmd -o ./result/am335x-pru1-fw --library=libc.a 
-	gcc ./user_space/prumsg.c -o ./user_space/prumsg
+	gcc ./user_space/prumsg.c -o /usr/bin/prumsg
 	cd result
 	cp ./result/am335x-pru0-fw /lib/firmware
 	cp ./result/am335x-pru1-fw /lib/firmware
