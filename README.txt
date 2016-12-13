@@ -1,20 +1,67 @@
-PRU-ICSS PID Motor Demo
+    Beaglebone Green PRU PID Motor Speed Control Project
+    
+    Copyright (C) 2016  GREGORY RAVEN
 
-DESCRIPTION
-This design demonstrates simple motor control with a PID
-feedback loop using the Programmable Real Time Unit
-Subsystem and Industrial Communication Subsystem (PRU-ICSS).
-The PRU-ICSS can be found on several TI processors, such as
-AM335x, AM437x, and AM57x; here Sitara AM335x is used on the
-BeagleBone Black.
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
-WHAT'S INCLUDED?
-	This package includes the following resources:
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
 
-	DIRECTORY	CONTENTS
-	---------	--------
-	hw		Contains the schematic and bill of materials necessary
-			to replicate the hardware setup for the PRU-ICSS PID
-			Motor Demo
-	sw		Contains the software, Makefiles, and binaries needed
-			to run the PRU-ICSS PID Motor Demo	
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    
+    
+    This is a revised implementation of a project published by Texas
+    Instruments:
+    
+    http://www.ti.com/lit/ug/tidubj6/tidubj6.pdf
+    
+    The above project is based on an earlier version of the PRU 
+    RemoteProc framework which used the "mailbox" system on the SOC.  
+    The latest framework has changed to system interrupts, and the code
+    has been revised for compatibility with these changes.
+    
+    The project uses the "Beaglebone Green" (BBG) development board:
+    
+    http://beagleboard.org/green
+    
+    A youtube video demonstrates the project:
+    
+    https://youtu.be/wzNGHVjAqL8
+    
+    This device includes two "Programmable Real-time Units" which 32 bit
+    RISC processors which are intended to offload real-time tasks from
+    the embedded Linux running on the host ARM processor.
+    
+    The system implements a "Proportional Integral Derivative" type
+    digital feedback controller.  The controlled parameter is the
+    rotational speed of a DC motor.  The DC motor is fitted with a
+    "quadrature encoder" which provides both RPM and directional data.
+    
+    The DC motor/encoder recommended is different than the one shown in
+    the TI documentation.  A motor/encoder obtained from eBay provided
+    excellent results in this system.
+    
+    The quadrature encoder data is input to the P8 header on the
+    BBG.  The DC motor is controlled via "Pulse Width Modulation" which
+    is sourced from header P9.  The PWM peripheral resides on PRU1, 
+    while the quadrature timing/decoding peripheral is located outside
+    the PRU and is accessed via the internal bus.
+    
+    A user-space C program provides simple control of the PID loop via
+    character devices instantiated with the RemoteProc Messaging driver.
+    
+    An HTTP server capability allows the graphing of control loop
+    behavior in a web page.  This is functional and can easily be set
+    up to serve the web page from the BBG.  Capability to control RPM
+    and PID loop parameters is possible from the web page, but it was
+    not successfully demonstrated.
+    
+    Regards,
+    Greg
+    
