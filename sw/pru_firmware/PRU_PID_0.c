@@ -30,6 +30,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+ //  Tweaks to the PID parameters were implemented by Gregory Raven.
 
 #include <stdint.h>
 #include <am335x/pru_cfg.h>

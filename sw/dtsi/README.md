@@ -8,3 +8,7 @@ This is included by adding this line to the file:
 #include "am335x-boneblack-prupid.dtsi"
 
 The above line should be added to the END of the file!
+
+The "dtb-rebuilder" script by Robert Nelson is highly recommended:
+
+https://github.com/RobertCNelson/dtb-rebuilder

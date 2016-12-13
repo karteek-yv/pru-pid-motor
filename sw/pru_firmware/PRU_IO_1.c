@@ -23,6 +23,9 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+ //  This version was revised by Gregory Raven to be compatible with
+ //  recent PRU RemoteProc framework which changed to System Events
+ //  (was Mailboxes).
 
 #include <stdint.h>
 #include <limits.h>
@@ -148,7 +151,7 @@ void main(void) {
         /* Write PWM speed (ACMP) */
 
         CT_ECAP.CAP2_bit.CAP2 = share_buff.pid.output;
-//        CT_ECAP.CAP2_bit.CAP2 = 0x0AF0;
+//        CT_ECAP.CAP2_bit.CAP2 = 0x0AF0;  //  This forces PWM output.
         /* Save write cycles by waiting until unit time event */
         if (PWMSS1.EQEP_QFLG & 0x0800) {
             PWMSS1.EQEP_QCLR |= 0x0800;
@@ -198,6 +201,7 @@ void init_eqep() {
 
     /* Set prescalers for EQEP Capture timer and UPEVNT */
     /* Note: EQEP Capture unit must be disabled before changing prescalar */
+    //  The value used by TI was 0x0073.  This was causing overflows.
     PWMSS1.EQEP_QCAPCTL = 0x0070;
 
     /* Enable EQEP Capture */
@@ -242,7 +246,7 @@ int get_enc_rpm() {
 }
 
 //  init_rpmsg
- 
+//  Revised for system events rather than mailboxes. 
 void init_rpmsg(struct pru_rpmsg_transport* transport) {
 	volatile uint8_t *status;
 
