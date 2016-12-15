@@ -51,13 +51,7 @@ This project demonstrates an electronic speed control for a DC motor which is im
 
 \section{Limitations}
 
-The BeagleBone's Sitara ``System On Chip'' is quite powerful, and this power is probably masking several inefficiencies in the project's design.  All of the testing and debugging was done with a bare-bones Debian distribution with no other significant processes running.
 
-The speaker audio does not have noticeable distortion or glitches when listening with the speaker.  The audio was not examined with a spectrum or distortion analyzer.  It may not be the best quality audio.
-
-The audio sample rate was limited to 8 kHz, which is the lowest rate accepted by ALSA.  A follow-up investigation will see if the sample rate can be increased.  It is not known what aspect of the system will begin to break down as the sample rate is increased.
-
-The sample rate had to be ``tuned'' to prevent ``buffer underruns'' reported by the ALSA system.  An approach to make the real-time data stream robust is not known by the author and needs further investigation.
 
 All of the development was done as root user via ssh on the BeagleBone Green.  This is generally not a good practice, however, considering this as an embedded and experimental project it was not considered to be a serious drawback.
 
