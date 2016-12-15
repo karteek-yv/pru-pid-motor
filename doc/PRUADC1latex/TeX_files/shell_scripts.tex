@@ -1,0 +1,42 @@
+%    Documentation for PRU ADC Project
+%    Copyright (C) 2016  Gregory Raven
+%
+%    This program is free software: you can redistribute it and/or modify
+%    it under the terms of the GNU General Public License as published by
+%    the Free Software Foundation, either version 3 of the License, or
+%    (at your option) any later version.
+%
+%    This program is distributed in the hope that it will be useful,
+%    but WITHOUT ANY WARRANTY; without even the implied warranty of
+%    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%    GNU General Public License for more details.
+%
+%    You should have received a copy of the GNU General Public License
+%    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+\chapter{Shell Scripts}
+
+There are two very important shell scripts located in the shell\_scripts of the git repository.
+
+These scripts are very simple and each contain only a single command.
+
+The commands are described in the notes file from this github repository:
+
+\url{https://github.com/ZeekHuge/BeagleScope}
+
+And specifically, this is the path to the notes file:
+
+\url{https://github.com/ZeekHuge/BeagleScope/blob/port_to_4.4.12-ti-r31%2B/docs/current_remoteproc_drivers.notes} 
+	
+	The commands are seen in section 2:
+	
+	\begin{verbatim}
+	echo "4a334000.pru0" > /sys/bus/platform/drivers/pru-rproc/unbind
+	echo "4a334000.pru0" > /sys/bus/platform/drivers/pru-rproc/bind
+	echo "4a338000.pru1"  > /sys/bus/platform/drivers/pru-rproc/unbind
+	echo "4a338000.pru1" > /sys/bus/platform/drivers/pru-rproc/bin
+	\end{verbatim}
+	
+	The above shell commands show how the PRUs can ``bind'' and ``unbind'' from the remoteproc driver.  These commands are extremely useful and their placement in shell scripts allows them to be easily run at the command line by entering ``prumodin'' or ''prumodout''.
+	
+	The shell scripts should be copied to /usr/bin so they will be available in any shell.
