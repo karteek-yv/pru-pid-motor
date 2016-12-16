@@ -20,14 +20,15 @@ This is the documentation for an embedded GNU/Linux project utilizing the Remote
 
 \url{https://github.com/Greg-R/pru-pid-motor}
 
-The inspiration for this project came from an example project published by Texas Instruments.  The Texas Instruments project is based on "Code Composer Studio".  This
-requires a relatively complex cross-compiler installation:
+The inspiration for this project came from an example project published by Texas Instruments.  The Texas Instruments project is based on "Code Composer Studio", which is an "Integrated Development Environment" (IDE):
 
 \url{http://processors.wiki.ti.com/index.php/PRU_Training:_PRU_PID_Motor_Demo}
 
 There is also a PDF file which describes the project in detail:
 
 \url{http://www.ti.com/lit/ug/tidubj6/tidubj6.pdf}
+
+The TI project requires a relatively complex cross-compiler installation.  This project is designed to be done via SSH terminal connection, and all software compilation was done on the Beaglebone Green target device using the VIM text editor.
 
 Recent developments in the Texas Instruments PRU support include the RemoteProc and Remote Messaging frameworks, as well as an extensively documented C compiler and much additional supporting documentation.  This project utilizes these frameworks and is entirely dependent upon C code in both the PRU and GNU/Linux user space.  For further information, refer to the detailed examples provided by TI in the ``PRU Support Package'':
 
@@ -37,21 +38,13 @@ A listing of additional resources is found in the Resources chapter.
 
 The motor recommended by TI was purchased and tested.  However, a better motor with an integrated encoder was found on eBay and is recommended.  A chapter is included with describes this motor-encoder and how to obtain one.
 
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[width=0.8\textwidth]{diagrams/data_flow_intro}
-%	\centering\bfseries
-%	\caption{Flow of Data Through the System}
-%\end{figure}
-
 \section{Project Goals}
 
 This project demonstrates an electronic speed control for a DC motor which is implemented with the PRUs included with the Beaglebone Green.  Beyond its usefulness as a demonstration project, it could be used in a robotics project such as a ``mobile robot''.
 
+The basic principle of the speed controller is "Proportional Integral Derivative" feedback control, which is a common feedback controller used in digital systems.
 
 \section{Limitations}
-
-
 
 All of the development was done as root user via ssh on the BeagleBone Green.  This is generally not a good practice, however, considering this as an embedded and experimental project it was not considered to be a serious drawback.
 
