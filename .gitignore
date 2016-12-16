@@ -33,3 +33,15 @@ prumsg
 # Debug files
 *.dSYM/
 *.su
+
+# Tex files
+*.aux
+*.toc
+*.out
+*.log
+*.out
+*.log
+*.gz
+*.lof
+
+

@@ -26,7 +26,7 @@ These files must have specific names as follows:
 
 The Makefile includes cp commands to copy the firmwares to the /lib/firmware directory.
 
-\section{Implementing the SPI Bus Firmware in C (pru0adc.c)}
+\section{The PID Firmware in PRU0:  Digital Feedback Loop (pru0adc.c)}
 
 The SPI bus C program roughly follows the PRU assembly code written by Derek Molloy.  The C code is compiled to a binary file am335x-pru0-fw. The firmware is loaded into PRU0 automatically by the Remoteproc kernel driver.
 
@@ -83,62 +83,7 @@ The maximum buffer size which can be handled by RPMsg is 512 bytes (or 256 16 bi
 
 Timings are critical, and this was accomplished by using the compiler intrinsic \_\_delay\_cycles.  Each delay is an absolute value of 5 nanoseconds.  This scheme has sufficient timing precision to implement the SPI bus in real time.  
 
-\section{Implementing the Timing Clock Firmware in C (pru1adc.c)}
+\section{The Firmware in PRU1: PID Control (pru1adc.c)}
 
-The ``Timing Clock'' sets the data sample rate.  The code is compiled into firmware am335x-pru1-fw, and this binary file is loaded into PRU1 by the Remoteproc kernel driver.
 
-The output of the Timing Clock is a single pulse at a rate of 8 kHz.  This pulse is written to a PRU shared memory location.  This means that the SPI program in PRU0 can access this memory address and read its state.  A while loop in PRU0 polls this address and exits from the loop when the pulse goes high.  This polling action is done at the top of the for loop which captures a data sample from the ADC.  Thus the data capturing sequence in PRU0 is gated at the Timing Clock pulse rate.
-
-The Timing Clock does not begin emitting pulses as soon as the firmware is loaded and started.  There is a character device created in the initialization section of the C code.  The character device is created, and then a while loop begins monitoring for a specific incoming message, which in this case is the letter ``g'' (go);  When the go message is successfully received, the while loop is exited and the Timing Clock pulse code begins emitting pulses to PRU shared memory.  Here is the code snippet which does this:
-
-\begin{verbatim}
- //  The following code looks for a specific incoming message via RPMsg.
- //  This code blocks until the message is successfully received.
- //  If the correct message is received, the clock is allowed to begin.
-  while (1) {
-    /* Check bit 30 of register R31 to see if the ARM has kicked us */
-    if (__R31 & HOST_INT) {
-      /* Clear the event status */
-      CT_INTC.SICR_bit.STS_CLR_IDX = FROM_ARM_HOST;
-      /* Receive all available messages, multiple messages can be sent per kick
-       */
-      if (pru_rpmsg_receive(&transport, &src, &dst, payload, &len) ==
-          PRU_RPMSG_SUCCESS) {
-        if (payload[0] == 'g')
-          break;
-      }
-    }
-  }
-\end{verbatim}
-
-After the ``go'' code is successfully received, the pulse timing code begins.
-
-The pulse timing code is contained in an infinite while-loop.  A pointer variable is declared which is the address of the PRU shared memory location.  This pointer is ``dereferenced'' and the value 7 (binary LSB value 111) to pulse ``high'', a delay command fires which defines the pulse width, and then the deferenced pointer is reassigned to zero.
-
-The manipulation of \_\_R30 is done so that the pulse is also present at the header pin P9.30.  This allows monitoring via the Analog Discovery 2 logic analyzer.
-
-\begin{verbatim}
-  //  The sample clock is located at shared memory address 0x00010000.
-  //  Need a pointer for this address.  This is found in the linker file.
-  //  The address 0x0001_000 is PRU_SHAREDMEM.
-  uint32_t *clockPointer = (uint32_t *)0x00010000;
-  *clockPointer = 0; //  Clear this memory location.
-
-  while (1) {
-    __R30 = __R30 | (1 << 11);  // P9.30
-    *clockPointer = 7;
-    __delay_cycles(1000); 
-    *clockPointer = 0;
-    __R30 = __R30 & (0 << 11);
-    //  The following delay will set the clock rate.
-    //  This delay was originally 24000 cycles; it was reduced due to ALSA underruns.
-    __delay_cycles(23980); 
-  }
-\end{verbatim}
-
-The final line of the delay loop using the compiler intrinsic \_\_delay\_cycles(23980) sets the pulse rate.  Each delay cycle is 5 nanoseconds, and the pulse rate can be computed as follows:
-
-\[ \frac{\text{1}}{1000*5ns + 24000*5ns}  = \text{8000 Hz} \]
-
-Note that a few cycles are also required to implement the while-loop and to change the state of \_\_R30.  With the total value of 25000 delays, ALSA emitted ``buffer underrun'' warnings.  The delay value was empirically reduced until the underrun notices were no longer emitted.
 
