@@ -1,9 +1,12 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces PRU PID}}{3}{figure.2.1}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces PRU PID System on BeagleBone Green AM335X ``System On Chip''}}{3}{figure.2.1}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces eBay Motor-encoder}}{6}{figure.3.1}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces The Integrated Quadrature Encoder}}{7}{figure.3.2}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces PRU<->ARM Character Devices}}{9}{figure.4.1}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces PRU<->ARM Character Devices}}{11}{figure.5.1}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

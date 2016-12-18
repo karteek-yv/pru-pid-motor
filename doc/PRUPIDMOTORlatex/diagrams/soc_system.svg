@@ -203,9 +203,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.3577969"
-     inkscape:cx="253.6336"
-     inkscape:cy="778.02537"
+     inkscape:zoom="1.1244256"
+     inkscape:cx="3.4575367"
+     inkscape:cy="748.48297"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -233,7 +233,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -323,15 +323,20 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:25px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="271.06097"
-       y="451.28119"
+       x="273.729"
+       y="426.37958"
        id="text10088"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan10090"
-         x="271.06097"
-         y="451.28119"
-         style="font-size:40px">ARM</tspan></text>
+         x="273.729"
+         y="426.37958"
+         style="font-size:40px">ARM</tspan><tspan
+         sodipodi:role="line"
+         x="273.729"
+         y="476.37958"
+         style="font-size:40px"
+         id="tspan4259">SOC</tspan></text>
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#marker10236);marker-end:url(#marker10312)"
        d="m 340,362.3622 c 50,-70 50,-70 50,-70"
