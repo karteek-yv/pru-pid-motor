@@ -16,6 +16,8 @@
 
 \chapter{Shell Scripts}
 
+\section{RemoteProc ``Bind'' and ``Unbind'' Commands}
+
 There are two very important shell scripts located in the shell\_scripts of the git repository.
 
 These scripts are very simple and each contain only a single command.
@@ -39,4 +41,8 @@ And specifically, this is the path to the notes file:
 	
 	The above shell commands show how the PRUs can ``bind'' and ``unbind'' from the remoteproc driver.  These commands are extremely useful and their placement in shell scripts allows them to be easily run at the command line by entering ``prumodin'' or ''prumodout''.
 	
-	The shell scripts should be copied to /usr/bin so they will be available in any shell.
+	The shell scripts should be copied to /usr/bin to make them available from any shell.
+	
+\section{Environment Variables and Universal IO Configuration Script}
+
+The make process which is run in order to compile the PRU firmwares requires an environment variable to be set.

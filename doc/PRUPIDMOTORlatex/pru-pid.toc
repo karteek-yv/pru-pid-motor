@@ -19,6 +19,8 @@
 \contentsline {chapter}{\numberline {7}Universal IO and Connecting PRU to the Outside World}{18}{chapter.7}
 \contentsline {subsection}{\numberline {7.0.1}The PRU GPIO Spreadsheet}{19}{subsection.7.0.1}
 \contentsline {chapter}{\numberline {8}Shell Scripts}{20}{chapter.8}
+\contentsline {section}{\numberline {8.1}RemoteProc ``Bind'' and ``Unbind'' Commands}{20}{section.8.1}
+\contentsline {section}{\numberline {8.2}Environment Variables and Universal IO Configuration Script}{20}{section.8.2}
 \contentsline {chapter}{\numberline {9}Setting up the Remoteproc PRU and Compiler on the Beaglebone Green}{21}{chapter.9}
 \contentsline {section}{\numberline {9.1}Activate Remoteproc PRU and Kernel Modules}{21}{section.9.1}
 \contentsline {section}{\numberline {9.2}Activate Remoteproc: Step-by-step Process}{22}{section.9.2}
