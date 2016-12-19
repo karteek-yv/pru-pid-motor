@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.9.25)  18 DEC 2016 11:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.9.25)  19 DEC 2016 09:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -672,10 +672,10 @@ Package: parskip 2001/04/09 non-zero parskip adjustments
 ) (./pru-pid.aux
 (./cover/cover.aux) (./TeX_files/introduction.aux)
 (./TeX_files/system_diagram.aux) (./TeX_files/motor-encoder.aux)
-(./TeX_files/pru_firmware.aux) (./TeX_files/remoteproc_rpmsg.aux)
-(./TeX_files/universal_io.aux) (./TeX_files/shell_scripts.aux)
-(./TeX_files/pru_compiler.aux) (./TeX_files/running.aux)
-(./TeX_files/resources.aux))
+(./TeX_files/motor-driver.aux) (./TeX_files/pru_firmware.aux)
+(./TeX_files/remoteproc_rpmsg.aux) (./TeX_files/universal_io.aux)
+(./TeX_files/shell_scripts.aux) (./TeX_files/pru_compiler.aux)
+(./TeX_files/running.aux) (./TeX_files/resources.aux))
 \openout1 = `pru-pid.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 35.
@@ -784,7 +784,7 @@ LaTeX Info: Redefining \nameref on input line 35.
 \openout2 = `cover/cover.aux'.
 
  (./cover/cover.tex
-<photos/intro_view.JPG, id=100, 602.25pt x 418.56375pt>
+<photos/intro_view.JPG, id=116, 602.25pt x 418.56375pt>
 File: photos/intro_view.JPG Graphic file (type jpg)
 
 <use photos/intro_view.JPG>
@@ -797,24 +797,24 @@ Package pdftex.def Info: photos/intro_view.JPG used on input line 12.
 [1
 
 
-] (./pru-pid.toc)
+] (./pru-pid.toc [2
+
+])
 \tf@toc=\write4
 \openout4 = `pru-pid.toc'.
 
- [2
-
-] (./pru-pid.lot)
+ [3] (./pru-pid.lot)
 \tf@lot=\write5
 \openout5 = `pru-pid.lot'.
 
- [3
 
-]
-(./pru-pid.lof)
+[4
+
+] (./pru-pid.lof)
 \tf@lof=\write6
 \openout6 = `pru-pid.lof'.
 
- [4
+ [5
 
 ]
 \openout2 = `./TeX_files/introduction.aux'.
@@ -838,12 +838,12 @@ l.46
 
  (./TeX_files/system_diagram.tex
 Chapter 2.
-<diagrams/soc_system.pdf, id=176, 357.71698pt x 368.24646pt>
+<diagrams/soc_system.pdf, id=204, 374.52162pt x 369.17838pt>
 File: diagrams/soc_system.pdf Graphic file (type pdf)
 
 <use diagrams/soc_system.pdf>
 Package pdftex.def Info: diagrams/soc_system.pdf used on input line 5.
-(pdftex.def)             Requested size: 400.38898pt x 412.20282pt.
+(pdftex.def)             Requested size: 400.38898pt x 394.69586pt.
  [3
 
 
@@ -853,20 +853,33 @@ has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.12 \section
-             {Programmable Real-time Units (PRU)} <./diagrams/soc_system.pdf>]
-[4]) [5]
+l.18 
+      <./diagrams/soc_system.pdf>] [4]
+<diagrams/motor_system.pdf, id=224, 323.15013pt x 323.15013pt>
+File: diagrams/motor_system.pdf Graphic file (type pdf)
+
+<use diagrams/motor_system.pdf>
+Package pdftex.def Info: diagrams/motor_system.pdf used on input line 63.
+(pdftex.def)             Requested size: 500.48433pt x 500.51756pt.
+ [5]) [6pdfTeX warning (ext4): destination with the same identifier (name{figur
+e.2.2}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.60 \include{./TeX_files/system_diagram}
+                                          <./diagrams/motor_system.pdf>]
 \openout2 = `./TeX_files/motor-encoder.aux'.
 
- (./TeX_files/motor-encoder.tex
+
+(./TeX_files/motor-encoder.tex
 Chapter 3.
-<photos/s-l500.jpg, id=201, 501.875pt x 501.875pt>
+<photos/s-l500.jpg, id=242, 501.875pt x 501.875pt>
 File: photos/s-l500.jpg Graphic file (type jpg)
  <use photos/s-l500.jpg>
 Package pdftex.def Info: photos/s-l500.jpg used on input line 11.
 (pdftex.def)             Requested size: 250.24216pt x 250.24765pt.
 
-[6
+[7
 
 
 
@@ -877,24 +890,45 @@ has been already used, duplicate ignored
                                                   \fi \fi 
 l.22 \section
              {Quadrature Encoder} <./photos/s-l500.jpg>]
-<photos/encoder-close-view.jpg, id=206, 602.25pt x 303.1325pt>
+<photos/encoder-close-view.jpg, id=248, 602.25pt x 303.1325pt>
 File: photos/encoder-close-view.jpg Graphic file (type jpg)
 
 <use photos/encoder-close-view.jpg>
 Package pdftex.def Info: photos/encoder-close-view.jpg used on input line 26.
 (pdftex.def)             Requested size: 250.24216pt x 125.9549pt.
-) [7pdfTeX warning (ext4): destination with the same identifier (name{figure.3.
+) [8pdfTeX warning (ext4): destination with the same identifier (name{figure.3.
 2}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
 l.61 \include{./TeX_files/motor-encoder}
                                          <./photos/encoder-close-view.jpg>]
+\openout2 = `./TeX_files/motor-driver.aux'.
+
+
+(./TeX_files/motor-driver.tex
+Chapter 4.
+<photos/drv8833_breakout.png, id=253, 613.3314pt x 824.1189pt>
+File: photos/drv8833_breakout.png Graphic file (type png)
+
+<use photos/drv8833_breakout.png>
+Package pdftex.def Info: photos/drv8833_breakout.png used on input line 5.
+(pdftex.def)             Requested size: 250.24216pt x 336.2436pt.
+ [9
+
+
+
+pdfTeX warning (ext4): destination with the same identifier (name{figure.4.1}) 
+has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.17 
+      <./photos/drv8833_breakout.png>]) [10]
 \openout2 = `./TeX_files/pru_firmware.aux'.
 
-
-(./TeX_files/pru_firmware.tex
-Chapter 4.
+ (./TeX_files/pru_firmware.tex
+Chapter 5.
 LaTeX Font Info:    Try loading font information for OMS+bch on input line 23.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsbch.fd
 File: omsbch.fd 
@@ -907,60 +941,61 @@ Overfull \hbox (35.86797pt too wide) in paragraph at lines 29--29
 .c) 
  []
 
-[8
+[11
 
 
 
-]) [9] [10]
+]) [12] [13]
 \openout2 = `./TeX_files/remoteproc_rpmsg.aux'.
 
  (./TeX_files/remoteproc_rpmsg.tex
-Chapter 5.
+Chapter 6.
 File: diagrams/soc_system.pdf Graphic file (type pdf)
 <use diagrams/soc_system.pdf>
 Package pdftex.def Info: diagrams/soc_system.pdf used on input line 21.
-(pdftex.def)             Requested size: 350.3375pt x 360.67677pt.
- [11
+(pdftex.def)             Requested size: 350.3375pt x 345.35466pt.
+ [14
 
 
 
-pdfTeX warning (ext4): destination with the same identifier (name{figure.5.1}) 
+pdfTeX warning (ext4): destination with the same identifier (name{figure.6.1}) 
 has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.31 
-     ]
+l.32 T
+      he Remoteproc framework automatically does the job of loading the PRU ...
+]
 Overfull \hbox (18.49823pt too wide) in paragraph at lines 34--35
 \T1/bch/m/n/12 vices which ap-pear in the usual /dev di-rec-tory. The stan-dard
  POSIX func-tions read/write/open/close
  []
 
-[12] [13]) [14]
+[15] [16]) [17]
 \openout2 = `./TeX_files/universal_io.aux'.
 
  (./TeX_files/universal_io.tex
-Chapter 6.
+Chapter 7.
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 60.
 
-[15
+[18
 
 
 
-]) [16]
+]) [19]
 \openout2 = `./TeX_files/shell_scripts.aux'.
 
  (./TeX_files/shell_scripts.tex
-Chapter 7.
+Chapter 8.
 
 Overfull \hbox (12.91554pt too wide) in paragraph at lines 29--30
 [][][]$\T1/cmtt/m/n/12 https : / / github . com / ZeekHuge / BeagleScope / blob
  / port _ to _ 4 . 4 . 12-[]ti-[]r31 % 2B / docs / current _
  []
 
-) [17
+) [20
 
 
 
@@ -968,8 +1003,8 @@ Overfull \hbox (12.91554pt too wide) in paragraph at lines 29--30
 \openout2 = `./TeX_files/pru_compiler.aux'.
 
  (./TeX_files/pru_compiler.tex
-Chapter 8.
-[18
+Chapter 9.
+[21
 
 
 
@@ -981,17 +1016,17 @@ _ Debian # microSD . 2FStandalone : _ . 28iot .
 
 
 Overfull \hbox (34.61957pt too wide) has occurred while \output is active
-\T1/bch/m/sl/12 CHAPTER 8.  SETTING UP THE REMOTEPROC PRU AND COMPILER ON THE B
-EAGLEBONE GREEN \T1/bch/m/n/12 19
+\T1/bch/m/sl/12 CHAPTER 9.  SETTING UP THE REMOTEPROC PRU AND COMPILER ON THE B
+EAGLEBONE GREEN \T1/bch/m/n/12 22
  []
 
-[19]
+[22]
 Overfull \hbox (34.61957pt too wide) has occurred while \output is active
-\T1/bch/m/sl/12 CHAPTER 8.  SETTING UP THE REMOTEPROC PRU AND COMPILER ON THE B
-EAGLEBONE GREEN \T1/bch/m/n/12 20
+\T1/bch/m/sl/12 CHAPTER 9.  SETTING UP THE REMOTEPROC PRU AND COMPILER ON THE B
+EAGLEBONE GREEN \T1/bch/m/n/12 23
  []
 
-[20]
+[23]
 Overfull \hbox (72.1577pt too wide) in paragraph at lines 201--201
  []\T1/cmtt/m/n/12 git clone git://git.ti.com/pru-software-support-package/pru-
 software-support-package.git[] 
@@ -999,28 +1034,28 @@ software-support-package.git[]
 
 
 Overfull \hbox (34.61957pt too wide) has occurred while \output is active
-\T1/bch/m/sl/12 CHAPTER 8.  SETTING UP THE REMOTEPROC PRU AND COMPILER ON THE B
-EAGLEBONE GREEN \T1/bch/m/n/12 21
+\T1/bch/m/sl/12 CHAPTER 9.  SETTING UP THE REMOTEPROC PRU AND COMPILER ON THE B
+EAGLEBONE GREEN \T1/bch/m/n/12 24
  []
 
-[21]
+[24]
 Overfull \hbox (34.61957pt too wide) has occurred while \output is active
-\T1/bch/m/sl/12 CHAPTER 8.  SETTING UP THE REMOTEPROC PRU AND COMPILER ON THE B
-EAGLEBONE GREEN \T1/bch/m/n/12 22
+\T1/bch/m/sl/12 CHAPTER 9.  SETTING UP THE REMOTEPROC PRU AND COMPILER ON THE B
+EAGLEBONE GREEN \T1/bch/m/n/12 25
  []
 
-[22])
+[25])
 Overfull \hbox (34.61957pt too wide) has occurred while \output is active
-\T1/bch/m/sl/12 CHAPTER 8.  SETTING UP THE REMOTEPROC PRU AND COMPILER ON THE B
-EAGLEBONE GREEN \T1/bch/m/n/12 23
+\T1/bch/m/sl/12 CHAPTER 9.  SETTING UP THE REMOTEPROC PRU AND COMPILER ON THE B
+EAGLEBONE GREEN \T1/bch/m/n/12 26
  []
 
-[23]
+[26]
 \openout2 = `./TeX_files/running.aux'.
 
  (./TeX_files/running.tex
-Chapter 9.
-) [24
+Chapter 10.
+) [27
 
 
 
@@ -1028,54 +1063,44 @@ Chapter 9.
 \openout2 = `./TeX_files/resources.aux'.
 
  (./TeX_files/resources.tex
-Chapter 10.
-) [25
+Chapter 11.
+) [28
 
 
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 73.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 73.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 74.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 74.
  (./pru-pid.aux (./cover/cover.aux) (./TeX_files/introduction.aux)
 (./TeX_files/system_diagram.aux) (./TeX_files/motor-encoder.aux)
-(./TeX_files/pru_firmware.aux) (./TeX_files/remoteproc_rpmsg.aux)
-(./TeX_files/universal_io.aux) (./TeX_files/shell_scripts.aux)
-(./TeX_files/pru_compiler.aux) (./TeX_files/running.aux)
-(./TeX_files/resources.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 73.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 73.
-
-
-Package rerunfilecheck Warning: File `pru-pid.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `pru-pid.out':
-(rerunfilecheck)             Before: C5603691B4CE66AB5AA1458C244C3DD6;1784
-(rerunfilecheck)             After:  3AFA204E6A7545484284B50AA2E9A7C3;1784.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 73.
+(./TeX_files/motor-driver.aux) (./TeX_files/pru_firmware.aux)
+(./TeX_files/remoteproc_rpmsg.aux) (./TeX_files/universal_io.aux)
+(./TeX_files/shell_scripts.aux) (./TeX_files/pru_compiler.aux)
+(./TeX_files/running.aux) (./TeX_files/resources.aux))
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 74.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 74.
+Package rerunfilecheck Info: File `pru-pid.out' has not changed.
+(rerunfilecheck)             Checksum: 01C0FEAFB36B9C60377322C3CE325826;2097.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 74.
  ) 
 Here is how much of TeX's memory you used:
- 7530 strings out of 494953
- 106584 string characters out of 6180977
- 297600 words of memory out of 5000000
- 10507 multiletter control sequences out of 15000+600000
+ 7567 strings out of 494953
+ 107245 string characters out of 6180977
+ 298016 words of memory out of 5000000
+ 10520 multiletter control sequences out of 15000+600000
  34434 words of font info for 45 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  29i,6n,30p,491b,517s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{section.2.3} has been referenced but does not exi
-st, replaced by a fixed one
-
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc} </home/raven/.texmf
--var/fonts/pk/ljfour/jknappen/ec/ectt1200.600pk></usr/share/texlive/texmf-dist/
-fonts/type1/bitstrea/charter/bchb8a.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/bitstrea/charter/bchr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/bits
-trea/charter/bchr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmsy10.pfb>
-Output written on pru-pid.pdf (30 pages, 337287 bytes).
+ </home/raven/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1200.600pk>{/usr/sha
+re/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dis
+t/fonts/type1/bitstrea/charter/bchb8a.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/bitstrea/charter/bchr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/bi
+tstrea/charter/bchr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmsy10.pfb>
+Output written on pru-pid.pdf (34 pages, 15879862 bytes).
 PDF statistics:
- 450 PDF objects out of 1000 (max. 8388607)
- 324 compressed objects within 4 object streams
- 87 named destinations out of 1000 (max. 500000)
- 213 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 511 PDF objects out of 1000 (max. 8388607)
+ 376 compressed objects within 4 object streams
+ 102 named destinations out of 1000 (max. 500000)
+ 255 words of extra memory for PDF output out of 10000 (max. 10000000)
 

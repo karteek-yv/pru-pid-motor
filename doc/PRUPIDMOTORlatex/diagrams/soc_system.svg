@@ -19,6 +19,35 @@
   <defs
      id="defs4">
     <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="marker4408"
+       style="overflow:visible;"
+       inkscape:isstock="true">
+      <path
+         id="path4410"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         transform="scale(0.8) rotate(180) translate(12.5,0)" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible;"
+       id="marker4306"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend"
+       inkscape:collect="always">
+      <path
+         transform="scale(0.8) rotate(180) translate(12.5,0)"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path4308" />
+    </marker>
+    <marker
        inkscape:isstock="true"
        style="overflow:visible;"
        id="marker12200"
@@ -204,8 +233,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.1244256"
-     inkscape:cx="3.4575367"
-     inkscape:cy="748.48297"
+     inkscape:cx="322.73167"
+     inkscape:cy="680.8929"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -233,7 +262,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -372,7 +401,7 @@
          y="352.31482"
          style="font-size:15px">/dev/rpmsg_31</tspan></text>
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#marker11022);marker-end:url(#marker10418)"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:;marker-end:url(#marker10418)"
        d="M 400,432.3622 C 517.13904,406.41626 569.69066,293.39088 486.08152,238.17566"
        id="path10410"
        inkscape:connector-curvature="0"
@@ -394,7 +423,7 @@
          x="136.7585"
          y="643.19012"
          id="tspan11120"
-         style="text-align:center;text-anchor:middle">ENCODER</tspan></text>
+         style="text-align:center;text-anchor:middle">DECODER</tspan></text>
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker12200)"
        d="m 485,202.3622 95,0"
@@ -418,5 +447,72 @@
          y="192.59615"
          id="tspan12292"
          style="text-align:center;text-anchor:middle">TO MOTOR</tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker4306)"
+       d="m 480,472.3622 -80,0"
+       id="path4298"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker4408)"
+       d="m 480,492.3622 -80,0"
+       id="path4400"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="580"
+       y="482.36221"
+       id="text4508"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4510"
+         x="580"
+         y="482.36221" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="546.42688"
+       y="448.34995"
+       id="text4512"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4514"
+         x="546.42688"
+         y="448.34995"
+         style="text-align:center;text-anchor:middle">FROM</tspan><tspan
+         sodipodi:role="line"
+         x="546.42688"
+         y="470.22495"
+         id="tspan4516"
+         style="text-align:center;text-anchor:middle">MOTOR</tspan><tspan
+         sodipodi:role="line"
+         x="546.42688"
+         y="492.09995"
+         id="tspan4518"
+         style="text-align:center;text-anchor:middle">QUADRATURE</tspan><tspan
+         sodipodi:role="line"
+         x="546.42688"
+         y="513.97498"
+         id="tspan4520"
+         style="text-align:center;text-anchor:middle">ENCODER</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:12.5px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="454.43106"
+       y="318.30908"
+       id="text5117"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5119"
+         x="454.43106"
+         y="318.30908"
+         style="text-align:center;text-anchor:middle">RemoteProc</tspan><tspan
+         sodipodi:role="line"
+         x="454.43106"
+         y="333.93408"
+         id="tspan5125"
+         style="text-align:center;text-anchor:middle">Messaging</tspan></text>
   </g>
 </svg>
