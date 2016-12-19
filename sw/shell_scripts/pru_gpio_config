@@ -3,7 +3,7 @@
 #  PRU code development.
 
 export PRU_CGT=/usr/share/ti/cgt-pru
-export PRU-MOT=/home/debian/pru-pid-motor
+export PRU_MOT=/home/debian/pru-pid-motor
 export SLOTS=/sys/devices/platform/bone_capemgr
 
 #  The following use the "Universal IO" to configure
