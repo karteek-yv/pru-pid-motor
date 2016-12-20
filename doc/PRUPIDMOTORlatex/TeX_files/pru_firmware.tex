@@ -26,64 +26,85 @@ These files must have specific names as follows:
 
 The Makefile includes cp commands to copy the firmwares to the /lib/firmware directory.
 
-\section{The PID Firmware in PRU0:  Digital Feedback Loop (pru0adc.c)}
+\section{The PID Firmware in PRU0:  Digital Feedback Loop (PRU\_PID\_0.c)}
 
-The SPI bus C program roughly follows the PRU assembly code written by Derek Molloy.  The C code is compiled to a binary file am335x-pru0-fw. The firmware is loaded into PRU0 automatically by the Remoteproc kernel driver.
+This C program defines a struct ``shared\_mem'' which contains another struct ``pid\_data''. This same struct is also defined in the PRU1 code.  It is this common data structure which allows the two PRUs to communicate.
 
-The program begins with code sequestered from an example code file in TI's PRU Software
-Support Package.  This codes establishes the character device driver via the ``Remote Proc Messenger''
-kernel driver.  There are several lines of RPMsg ``set-up'' code which appear at the top of the file.
-
-Here is the path to the file from the root directory of the PRU Software Support Package:
+The following code fragment shows how the PRU shared memory is arranged:
 
 \begin{verbatim}
-pru-software-support-package/examples/am335x/PRU_RPMsg_Echo_Interrupt0
+#pragma DATA_SECTION(share_buff, ".share_buff")
+volatile far struct shared_mem share_buff;
 \end{verbatim}
 
-There is a sort of ``priming'' process required whereby a user space program writes
-to the device driver.  The initializes the character driver, which allows it to write data from
-the PRU to the character driver and thus making the data available in user-space.  This is the critical
-code which performs this function:
+In addition to the code in the C files, the ``DATA\_SECTION'' must be defined in the linker command file AM335x\_PRU.cmd:
 
 \begin{verbatim}
-  //  This section of code blocks until a message is received from ARM.
-  while (pru_rpmsg_receive(&transport, &src, &dst, payload, &len) !=
-  PRU_RPMSG_SUCCESS) {
-  }
+	  PAGE 2:
+	PRU_SHAREDMEM	: org = 0x00010000 len = 0x00002FA8 CREGISTER=28 /* 12kB Shared RAM */
+        GLB_BUF         : org = 0x00012FA8 len = 0x00000058 /* Shared buf in Shared RAM */
 \end{verbatim}
 
-This empty while-loop continues until the user-space code writes a message to the character driver.  Upon receipt of a message, the data transport channel is ready to go, and the program breaks out of the while-loop.
-
-After the initialization is complete, the program enters a for-loop.  The SPI bus is implemented inside this for-loop.  This is done by ``bit-twiddling'' of register \_\_R30, which is 32 bits in length.  The individual bits in \_\_R30, in turn determine the ``high'' or ``low'' state at the GPIO, and thus the header pins.  The GPIO multiplexing is set via the ``Universal IO'', which is described in a later chapter.
-
-The code utilizes timing delays and sequential setting and unsetting of bit values of \_\_R30.  This is done per the requirements shown in the MCP3008 ADC data sheet. Each pass through the for-loop configures the ADC, and then captures a single 10-bit sample from the ADC.
-
-The top of the for-loop is blocked by a while ``polling'' loop.  The operand of the while-loop is the value of a PRU shared memory location.  The PRU1 timing clock code writes to this location at precisely timed intervals.  When the while loop detects that three of the bits change from 0s to 1s, the while loop is broken and the SPI bus data acquisition sequence begins.  This action is what determines the 8 kHz data sampling rate.
-
-The samples are accumulated in a buffer (int16\_t payload[256]).  When the buffer is filled, the data is written to the character device via a function provided by the RPMsg kernel driver.  Here is the code:
+This must also appear in ``SECTIONS'':
 
 \begin{verbatim}
-    //  Send frames of 245 samples.
-    //  The entire buffer size of 512 can't be used for
-    //  data.  Some space is required by the "header".
-    //  The data is offset by 512 and then multiplied
-    //  to make appropriately scaled 16 bit signed integers.
-    payload[dataCounter] = 50 * ((int16_t)data - 512);
-    dataCounter = dataCounter + 1;
-    
-    if (dataCounter == 245) {
-    pru_rpmsg_send(&transport, dst, src, payload, 490);
-    dataCounter = 0;
-    }
+SECTIONS {
+        (...other memory allocations)
+        .share_buff > GLB_BUF, PAGE 2
+}
 \end{verbatim}
 
-The dataCounter variable is incremented at the end of each pass through the for loop.  When the dataCounter hits 245, the pru\_rpmsg\_send command is used to write data to the character device. The dataCounter variable is reassigned to zero and the process repeats.
+The implementation of the PID controller is done using the usual infinite while loop.
 
-The maximum buffer size which can be handled by RPMsg is 512 bytes (or 256 16 bit integers).  However, not all of the buffer can be used as there is a ``header'' included which takes a few bytes.  The number of samples transmitted, 245, was determined empirically.  Some study of the kernel drivers needs to be accomplished to better understand this limitation.
+A function ``init\_pid'' sets the shared\_mem struct to some initial values.  Another while loop looks for the init\_flag variable to go high, which is a signal from PRU1 that the system is initialized and ready to start.
 
-Timings are critical, and this was accomplished by using the compiler intrinsic \_\_delay\_cycles.  Each delay is an absolute value of 5 nanoseconds.  This scheme has sufficient timing precision to implement the SPI bus in real time.  
+The main PID control loop is based on the function ``update\_pid''.  The function reads current values from the shared\_mem struct, and calculates an error value.  Using the PID controller design pattern, errors for proportional, integral, and derivatives terms are defined in terms of C assignment statements.  The terms are summed to create a total error variable ``output\_f''.
 
-\section{The Firmware in PRU1: PID Control (pru1adc.c)}
+The code uses a ``trick'' to emulate floating point mathematics using only fixed integers:
+
+\begin{verbatim}
+output = output_f >> SHIFT;
+\end{verbatim}
+
+where the ``SHIFT'' was defined as:
+
+\begin{verbatim}
+#define SHIFT    0x0E
+\end{verbatim}
+
+The above trick is also applied in the integral statement.
+
+A couple of if statements bound the output within limits set in the shared\_mem struct.
+And finally the loop control statement implements the negative feedback control:
+
+\begin{verbatim}
+pid->output = pid->max_output - output;
+\end{verbatim}
+
+\section{The Firmware in PRU1: PID Control (PRU\_IO\_1.c)}
+
+The firmware in PRU1 is less concerned about math, and more concerned with communicating with the world outside the PRU-ICSS.  The C code sets up the RemoteProc messaging framework to allow communications with Linux user-space.  PRU1 is also responsible for writing to the PWM and reading data from the Quadrature Decoder.
+
+The same shared\_mem struct as seen in PRU0 code is defined.  PRU1 needs to both read and write from this data structure.  PRU0 processes the data and returns an output value to write to the PWM which is determined by the PID calculations.
+
+After initialization, the code enters an infinite while loop.  The while loop services three tasks:
+
+\begin{enumerate}
+\item
+A RemoteProc Messaging interrupt bit is polled, and if it has been set this means that a message has been sent from Linux user-space.  The message is received, and then an ``interrupt service routine'' function is executed.  The ISR consists mainly of a case statement with several character strings used as codes to either set or read variables in the shared\_mem struct.  This is the mechanism whereby the user-space program can control the motor RPM (setpoint) and parameters of the PID control loop.
+
+\item Write the current output value to the PWM:
+
+\begin{verbatim}
+CT_ECAP.CAP2_bit.CAP2 = share_buff.pid.output;
+\end{verbatim}
+
+This statement is totally cryptic, but it does indeed write a variable to the PWM function of PRU1 and sets the waveform duty-cycle which in applied to the input of the DRV8833 motor control IC.
+\item
+Read the Quadrature Decoder output.  This is done using the utility function ``get\_enc\_rpm''.  Since this is the controlled parameter of the feedback control loop, the value is written to the shared\_mem struct for processing by the PID calculations in PRU0.
+\end{enumerate}
+
+The above is only a high-level description, as the code's features are too numerous to describe every function.  The curious reader is invited to examine the code which is published to the Git repository for further details.
 
 
 
