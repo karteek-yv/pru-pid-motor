@@ -14,7 +14,7 @@
 %    You should have received a copy of the GNU General Public License
 %    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-\chapter{Setting up the Remoteproc PRU and Compiler on the Beaglebone Green}
+\chapter{Setting up the Remoteproc Framework and PRU Compiler on the Beaglebone Green}
 
 The following describes the simplest possible set-up.  Everything was done via the command line, and the vim editor was used extensively to develop the C code and shell scripts.
 
@@ -45,7 +45,7 @@ This process was tested using this image:
 
 bone-debian-8.6-iot-armhf-2016-10-30-4gb.img
 
-The ``IOT'' (Internet Of Things) image includes the set of tools required to install and compile required software.
+The ``IOT'' (Internet Of Things) image includes the set of tools required to install and compile the required software.
 The image was found at this web site:
 
 \url{http://elinux.org/Beagleboard:BeagleBoneBlack_Debian#microSD.2FStandalone:_.28iot.29_.28BeagleBone.2FBeagleBone_Black.2FBeagleBone_Green.29}
@@ -94,15 +94,30 @@ For BBG, this is:
 \begin{verbatim}
 am335x-bonegreen.dts
 \end{verbatim}
-The only change required is to uncomment a single line in the file:
+Uncomment this single line in the file:
 \begin{verbatim}
 /*   #include "am33xx-pruss-rproc.dtsi"  */
 \end{verbatim}
 
-Unquote the line as follows:
+The line should now look like this:
 \begin{verbatim}
 #include "am33xx-pruss-rproc.dtsi"
 \end{verbatim}
+
+A new include statement must be added to the same file for configuration of the Quadrature Decoder and the PRU PWM.  This file must be copied from the repository:
+
+\begin{verbatim}
+pru-pid-motor/software/dtsi/am335x-boneblack-prupid.dtsi
+\end{verbatim}
+
+into the arm directory in the dtb-rebuilder.
+
+Add this line to the end of the am335x-bonegreen.dts file:
+
+\begin{verbatim}
+#include "am335x-boneblack-prupid.dtsi"
+\end{verbatim}
+ 
 Save and exit.
 \item
 Execute:

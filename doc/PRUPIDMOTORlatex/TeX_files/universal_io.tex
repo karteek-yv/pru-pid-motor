@@ -14,50 +14,22 @@
 %    You should have received a copy of the GNU General Public License
 %    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-\chapter{Universal IO and Connecting PRU to the Outside World}
+\chapter{Device Tree Requirements}
 
-This project did not require a custom ``Device Tree Overlay''.  Instead, the ``Universal IO'' driver was used along with a simple shell script.
+This project requires a custom ``Device Tree Include''.  This is a device tree fragment which is inserted into the top device tree file.  The dtsi directory located in the software directory contains the file and and a README file which explain how to edit the device tree source file.
+
+The same file, which in this case is ``am335x-bonegreen.dts'', must be modified in order to active the RemoteProc framework kernel drivers.  It is recommended to add the include statement at the same time the RemoteProc is activated.  This step is included in the RemoteProc and PRU Compiler step-by-step process in Chapter 9.
+
+
+There is one PRU GPIO output enabled on header P9 and this is used to monitor Quadrature Decoder under/overflow.  This configuration is done in the same file ``pru\_gpio\_config'' which is sourced by .bashrc as will be discussed in Chapter 8.
 
 The Universal IO project is located at this Github repository:
 
 \url{https://github.com/cdsteinkuehler/beaglebone-universal-io}
 
-The configuration is as follows:
+Universal IO is included with the most recent Debian-based IOT images.
 
-\begin{verbatim}
-config-pin P8.30 pruout
-config-pin P9.31 pruout
-config-pin P9.27 pruout
-config-pin P9.29 pruout
-config-pin P9.28 pruin
-config-pin P9.30 pruout
-\end{verbatim}
-
-The above can also be put into a file, for example ``pru-config'':
-
-\begin{verbatim}
-P8.30 pruout
-P9.31 pruout
-P9.27 pruout
-P9.29 pruout
-P9.28 pruin
-P9.30 pruout
-\end{verbatim}
-
-The command to load the above would be:
-
-config-pin -f pru-config
-
-Note that another step required is create the \$SLOTS environment variable
-and also to set on of the Universal-IO device trees as follows:
-
-\begin{verbatim}
-export SLOTS=/sys/devices/platform/bone_capemgr
-echo univ-emmc > $SLOTS/slots 
-\end{verbatim}
-
-
-\subsection{The PRU GPIO Spreadsheet}
+\section{The PRU GPIO Spreadsheet}
 
 Use ``git clone'' to download this repository:
 
