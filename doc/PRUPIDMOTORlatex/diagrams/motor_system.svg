@@ -40,11 +40,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8"
-     inkscape:cx="204.69066"
-     inkscape:cy="187.97277"
+     inkscape:zoom="4.6375"
+     inkscape:cx="191.42843"
+     inkscape:cy="178.86356"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer2"
      showgrid="true"
      units="px"
      inkscape:showpageshadow="false"
@@ -86,8 +86,7 @@
   <g
      inkscape:groupmode="layer"
      id="layer2"
-     inkscape:label="Layer 2"
-     sodipodi:insensitive="true">
+     inkscape:label="Layer 2">
     <g
        id="g5329"
        transform="matrix(1.5011954,0,0,1.5011954,12.278851,-5.083678)">
@@ -604,5 +603,17 @@
          y="86.696426"
          id="tspan4889"
          style="font-size:7.5px">connections)</tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 170,238 c 40.96497,-16.15168 61.08222,10.75912 67,67"
+       id="path4234"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 231,305 C 208.45218,247.54155 225.50503,174.63448 106,155"
+       id="path4236"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
   </g>
 </svg>

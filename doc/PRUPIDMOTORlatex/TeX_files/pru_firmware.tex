@@ -26,9 +26,9 @@ These files must have specific names as follows:
 
 The Makefile includes cp commands to copy the firmwares to the /lib/firmware directory.
 
-\section{The PID Firmware in PRU0:  Digital Feedback Loop (PRU\_PID\_0.c)}
+\section{PID Firmware in PRU0:  Digital Feedback Loop (PRU\_PID\_0.c)}
 
-This C program defines a struct ``shared\_mem'' which contains another struct ``pid\_data''. This same struct is also defined in the PRU1 code.  It is this common data structure which allows the two PRUs to communicate.
+This C program defines a struct ``shared\_mem'' which contains another struct ``pid\_data''. This same struct is also defined in the PRU1 code.  It is this common data structure which allows the two PRUs to exchange data.
 
 The following code fragment shows how the PRU shared memory is arranged:
 
@@ -58,7 +58,7 @@ The implementation of the PID controller is done using the usual infinite while 
 
 A function ``init\_pid'' sets the shared\_mem struct to some initial values.  Another while loop looks for the init\_flag variable to go high, which is a signal from PRU1 that the system is initialized and ready to start.
 
-The main PID control loop is based on the function ``update\_pid''.  The function reads current values from the shared\_mem struct, and calculates an error value.  Using the PID controller design pattern, errors for proportional, integral, and derivatives terms are defined in terms of C assignment statements.  The terms are summed to create a total error variable ``output\_f''.
+The main PID control loop is based on the function ``update\_pid''.  The function reads current values from the shared\_mem struct and calculates an error value.  Using the PID controller design pattern, errors for proportional, integral, and derivatives terms are defined in terms of C assignment statements.  The terms are summed to create a total error variable ``output\_f''.
 
 The code uses a ``trick'' to emulate floating point mathematics using only fixed integers:
 
@@ -75,7 +75,8 @@ where the ``SHIFT'' was defined as:
 The above trick is also applied in the integral statement.
 
 A couple of if statements bound the output within limits set in the shared\_mem struct.
-And finally the loop control statement implements the negative feedback control:
+
+The loop control statement implements the negative feedback control:
 
 \begin{verbatim}
 pid->output = pid->max_output - output;
@@ -101,10 +102,46 @@ CT_ECAP.CAP2_bit.CAP2 = share_buff.pid.output;
 
 This statement is totally cryptic, but it does indeed write a variable to the PWM function of PRU1 and sets the waveform duty-cycle which in applied to the input of the DRV8833 motor control IC.
 \item
-Read the Quadrature Decoder output.  This is done using the utility function ``get\_enc\_rpm''.  Since this is the controlled parameter of the feedback control loop, the value is written to the shared\_mem struct for processing by the PID calculations in PRU0.
+Read the Quadrature Decoder output.  This is done using the utility function ``get\_enc\_rpm()''.  Since this is the controlled parameter of the feedback control loop, the value is written to the shared\_mem struct for processing by the PID calculations in PRU0.
 \end{enumerate}
 
 The above is only a high-level description, as the code's features are too numerous to describe every function.  The curious reader is invited to examine the code which is published to the Git repository for further details.
 
+\section{Quadrature Decoder Tuning}
 
+The ``Quadrature Decoder'' function is contained within the PWMSS module.  This is a complex system with many tunable parameters.
+
+The original TI project recommends using an LED to signal ``overflow/underflow'' indication from the decoder.  This proved to be important.  The published values for the decoder parameters do not work with the recommended eBay motor-encoder.
+
+The LED indicator is connected to header pin P8-39.  The LED is connected in series with a 1.2k$\Omega$ resistor.  The ground end of the resistor is connected to P8-45.
+
+Universal IO was used to connect the PRU to header pin P8-39 as follows:
+
+\begin{verbatim}
+config-pin P8.39 pruout
+\end{verbatim}
+
+The above command is included in the shell script ``pru\_gpio\_config''.
+
+Under/over-flow is indicated by a blinking LED which is implemented in the function get\_enc\_rpm().
+
+The following original and modified values are from the function init\_eqep().
+
+\subsection{Original Quadrature Decoder Parameter}
+
+This is the original setting for use with the TI recommended motor-encoder; this did not work well with the eBay motor-encoder.  The LED was blinking quite a lot indicating under/overflow in the decoder circuit.
+
+\begin{verbatim}
+PWMSS1.EQEP_QCAPCTL = 0x0073;
+\end{verbatim}
+
+\subsection{Modified Quadrature Decoder Parameter}
+    
+This value was empirically adjusted until the LED stopped blinking.
+The rotation of the motor was ``noisy'' prior to this being adjusted.
+With this new value, the motor control changed to smooth and steady.
+    
+\begin{verbatim}
+PWMSS1.EQEP_QCAPCTL = 0x0070;
+\end{verbatim}
 
