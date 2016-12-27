@@ -31,11 +31,11 @@ This framework provides a means of controlling and communicating with the PRUs f
 
 The Remoteproc framework automatically does the job of loading the PRU firmwares from user-space into the PRUs.  Via a sysfs entry, the PRUs can be started and halted from the command line.  These functions are described in the chapter "Shell Scripts".
 
-The examples provided in the PRU Software Support Package show how to use provided functions to send and receive data from PRU to ARM or ARM to PRU.  This is done via character devices which appear in the usual /dev directory.  The standard POSIX functions read/write/open/close work with these character devices.  This allows for typical systems programming technique to become applicable when working with the PRUs.
+The examples provided in the PRU Software Support Package show how to use provided functions to send and receive data from PRU to ARM or ARM to PRU.  This is done via character devices which appear in the usual /dev directory.  The standard POSIX functions read/write/open/close work with these character devices.  This allows for typical systems programming technique to be applied when working with the PRUs.
 
 This project uses two character devices assigned to PRU1.  These character devices are used to assign and read back PID parameters to the control system via the user-space executable prumsg.
 
-This project did not require modifications to the loadable kernel modules in the Remoteproc framework.  The modules provided with the support package were used as-is.
+This project did not require modifications to the loadable kernel modules in the RemoteProc framework.  The modules provided with the IOT Debian-based distribution were used as-is.
 
 \section{The Remoteproc and RPMsg Kernel Modules}
 
@@ -68,7 +68,7 @@ modprobe pru_rproc
 rmmod pru_rproc
 \end{verbatim}
 
-``modprobe'' is the load command; rmmod is the remove command.
+``modprobe'' is the load command; ``rmmod'' is the remove command.
 
 Perhaps a better method of controlling the Remoteproc framework is via the sys virtual file system.  A set of shell scripts is included in the repository which includes these commands in the ``prumodout'' and ``prumodin'' scripts.
 
@@ -109,7 +109,7 @@ even if no resources are needed, the RemoteProc Linux driver expects the header 
 
 \item   Makefile
 
-Makefile to build your PRU C program either on the target, on your Linux machine, or even on a Windows machine. The comment at the top of the Makefile tries to explain the environment variable needed for a successful build and how to set it on each of the three supported build development environments.
+Makefile to build your PRU C program either on the target, on your Linux machine, or even on a Windows machine. The comment at the top of the Makefile tries to explain the environment variable needed for a successful build and how to set it on each of the three supported build development environments.  (Note that this is in reference to the Makefiles provided with the PRU Support Package.  The custom Makefile provided with this project does not have this feature.)
 
 \end{enumerate}
 \end{quotation}
