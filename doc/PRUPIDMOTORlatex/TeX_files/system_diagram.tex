@@ -52,17 +52,24 @@ Linux BBG2 4.4.30-ti-r64 #1 SMP Fri Nov 4 21:23:33 UTC 2016 armv7l GNU/Linux
 
 The latest IOT image has a newer kernel.  It is not a major update as of December 18, 2016.
 
-\section{User-space C Program ``prumsg''}
-
-A program runs in GNU/Linux user-space and is used to send commands to PRU1 via character devices instantiated by the RemoteProc messaging framework.  The program can also query PRU1 and return the current state of control variables for the PID as well as the setpoint and RPM reading from the quadrature encoder.
-
-\section{Motor System Diagram}
+\section{Motor System Hardware Diagram}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{diagrams/motor_system}
 	\centering\bfseries
-	\caption{Overall Motor System}
+	\caption{Motor System Hardware Diagram}
+\end{figure}
+
+The system was put together as a ``breadboard''.  The DRV8833 carrier board accepts standard header pins, and it easily plugs into a small breadboard.
+
+A bench dual-power supply was used to supply the approximately 8 Volts for the motor.  The second output of the dual supply is set to 3.3 Volts and is connected to the motor-encoder bias supply input.  This supply voltage was found to be somewhat critical and should be adjusted with an oscilloscope on the encoder outputs.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{photos/top_view.jpg}
+	\centering\bfseries
+	\caption{Photo of the Beaglebone Green and DRV8833 Break-out Boards}
 \end{figure}
 
 
