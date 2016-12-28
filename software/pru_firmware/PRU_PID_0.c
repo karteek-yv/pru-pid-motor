@@ -77,6 +77,9 @@ volatile far struct shared_mem share_buff;
 void main(void) {
     LOOPS = 0;
     //  Blink the LED to show PRU0 is alive.
+    //  This LED is not described in the documentation.
+    //  Use the Universal IO to change a GPIO to pruout to
+    //  enable this for debugging purposes.
     __R30 = 0x0000;
     __delay_cycles(10000000);
     __R30 = 0xFFFF;

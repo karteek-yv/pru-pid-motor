@@ -127,7 +127,7 @@ Under/over-flow is indicated by a blinking LED which is implemented in the funct
 
 The following original and modified values are from the function init\_eqep().
 
-\subsection{Original Quadrature Decoder Parameter}
+\subsection{Original Quadrature Decoder/Encoder Parameters}
 
 This is the original setting for use with the TI recommended motor-encoder; this did not work well with the eBay motor-encoder.  The LED was blinking quite a lot indicating under/overflow in the decoder circuit.
 
@@ -135,7 +135,14 @@ This is the original setting for use with the TI recommended motor-encoder; this
 PWMSS1.EQEP_QCAPCTL = 0x0073;
 \end{verbatim}
 
-\subsection{Modified Quadrature Decoder Parameter}
+Another parameter which must be adjusted is the "ticks per revolution".  Due to using a different motor-encoder, and the fact that the motor is geared, this parameter must be changed if the RPM calculation is to be done correctly.  Here is the original parameter:
+
+\begin{verbatim}
+/* Encoder definitions */
+#define TICKS_PER_REV       16
+\end{verbatim}
+
+\subsection{Modified Quadrature Decoder/Encoder Parameters}
     
 This value was empirically adjusted until the LED stopped blinking.
 The rotation of the motor was ``noisy'' prior to this being adjusted.
@@ -144,4 +151,13 @@ With this new value, the motor control changed to smooth and steady.
 \begin{verbatim}
 PWMSS1.EQEP_QCAPCTL = 0x0070;
 \end{verbatim}
+
+The parameter for "ticks per revolution" with the eBay motor-encoder is an early estimate:
+
+\begin{verbatim}
+/* Encoder definitions */
+#define TICKS_PER_REV       40
+\end{verbatim}
+
+The above is an early estimate, and it should be re-examined and revised if necessary.  Since this parameter effects the loop dynamics, and the PID parameters had been adjusted for a stable loop, this parameter was left as-is for future optimization.
 
