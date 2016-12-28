@@ -34,9 +34,9 @@
     
     https://youtu.be/wzNGHVjAqL8
     
-    This device includes two "Programmable Real-time Units" which 32 bit
-    RISC processors which are intended to offload real-time tasks from
-    the embedded Linux running on the host ARM processor.
+    This device includes two "Programmable Real-time Units" which are 
+    32-bit RISC processors which are intended to offload real-time tasks
+    from the embedded Linux running on the host ARM processor.
     
     The system implements a "Proportional Integral Derivative" type
     digital feedback controller.  The controlled parameter is the
@@ -47,7 +47,7 @@
     the TI documentation.  A motor/encoder obtained from eBay provided
     excellent results in this system.
     
-    The quadrature encoder data is input to the P8 header on the
+    The quadrature encoder output is connected to the P8 header on the
     BBG.  The DC motor is controlled via "Pulse Width Modulation" which
     is sourced from header P9.  The PWM peripheral resides on PRU1, 
     while the quadrature timing/decoding peripheral is located outside
